@@ -228,9 +228,7 @@ var KIJ2013 = (function(window, $, Lawnchair){
     };
 
 }(window,jQuery,Lawnchair));
-$(function(){
-    KIJ2013.init();
-});
+document.addEventListener("deviceready", function(){KIJ2013.init();},false);
 (function(){
     var randomColor = function(min,max){
             if(arguments.length < 2)
