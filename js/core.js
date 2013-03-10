@@ -27,7 +27,13 @@ var KIJ2013 = (function(window, $, Lawnchair){
                     select.change(function(){
                         navigateTo(select.val());
                     });
+
+                    setActionBarUp();
+                    $('#action_bar').show();
+                    popup = $('#popup');
+                    loading = $('#loading');
                     navigateTo(firstModule);
+                    setTimeout(function() {window.scrollTo(0, 1);}, 0);
                 };
 
             // Load preferences from store
@@ -50,12 +56,6 @@ var KIJ2013 = (function(window, $, Lawnchair){
                     both = true;
                 });
             });
-
-            setActionBarUp();
-            popup = $('#popup');
-            loading = $('#loading');
-            setTimeout(function() {window.scrollTo(0, 1);}, 0);
-            $('#action_bar').show();
         },
 
         /**
@@ -190,7 +190,7 @@ var KIJ2013 = (function(window, $, Lawnchair){
 
         showError = function(message)
         {
-            if(popup.length == 0)
+            if(!popup.length)
             {
                 popup = $('<div/>').attr('id', 'popup').appendTo('body');
             }
