@@ -13,9 +13,9 @@ var KIJ2013 = (function(window, $, Lawnchair){
          * Initialise KIJ2013 objects, databases and preferences
          */
         init = function(){
-            var firstModule,
-                afterDB = function(){
-                    var select = $('#action_bar select'), m;
+            var afterDB = function(){
+                    var firstModule,
+                        select = $('#action_bar select'), m;
                     select.empty();
                     for(module in modules){
                         if(!firstModule)
@@ -27,6 +27,7 @@ var KIJ2013 = (function(window, $, Lawnchair){
                     select.change(function(){
                         navigateTo(select.val());
                     });
+                    navigateTo(firstModule);
                 };
 
             // Load preferences from store
@@ -54,10 +55,7 @@ var KIJ2013 = (function(window, $, Lawnchair){
             popup = $('#popup');
             loading = $('#loading');
             setTimeout(function() {window.scrollTo(0, 1);}, 0);
-            setTimeout(function(){
-                $('#action_bar').show();
-                navigateTo(firstModule);
-            },1000);
+            $('#action_bar').show();
         },
 
         /**
