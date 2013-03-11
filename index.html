@@ -58,7 +58,7 @@
             <img src="img/ajax-loader.gif" alt="Please Wait" />
         </div>
     </div>
-    <script src="phonegap.js"></script>
+    <script src="cordova-2.5.0.js"></script>
     <script src="js/prefixfree.min.js"></script>
     <script src="js/jquery-1.7.1.min.js"></script>
     <script src="js/Lawnchair.js"></script>
@@ -76,5 +76,8 @@
     <script src="js/learn.js"></script>
     <script src="js/barcode.js"></script>
     <script src="js/settings.js"></script>
+    <script>
+        document.addEventListener('deviceready', function(){KIJ2013.init();}, false);
+    </script>
   </body>
 </html>

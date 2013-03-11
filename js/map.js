@@ -8,6 +8,9 @@
 
         init = function(){
             var s = settings = KIJ2013.getModuleSettings('Map');
+            if(!(s.imageSize && s.imageBounds && s.imageURL)){
+                throw "Invalid Settings";
+            }
             xScale = s.imageSize[0]/(s.imageBounds[2]-s.imageBounds[0]);
             yScale = s.imageSize[1]/(s.imageBounds[3]-s.imageBounds[1]);
         },
