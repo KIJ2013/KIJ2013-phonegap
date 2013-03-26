@@ -2,7 +2,7 @@ var KIJ2013 = (function(window, $, Lawnchair){
     var store_name = "core",
         preferences_key = "preferences",
         settings_key = "settings",
-        default_settings_url = "settings.json",
+        default_settings_url = "http://ijmacd.com/kij2013/settings.json",
         loading,
         beingLoaded,
         spinner,
@@ -30,7 +30,8 @@ var KIJ2013 = (function(window, $, Lawnchair){
                 navigateTo(spinner.val());
             });
 
-            actions.change(function(){
+            actions.change(function
+                (){
                 fireAction(actions.val());
             });
 
