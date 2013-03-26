@@ -7,6 +7,7 @@
         settings = {},
 
         init = function(){
+            KIJ2013.addMenuItem('Map');
             var s = settings = KIJ2013.getModuleSettings('Map');
             if(!(s.imageSize && s.imageBounds && s.imageURL)){
                 throw "Invalid Settings";

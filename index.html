@@ -2,6 +2,8 @@
 <html>
   <head>
     <title>KIJ2013</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/bootstrap-responsive.min.css" />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="shortcut icon" href="favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,10 +18,17 @@
         <a id="up-button">
             <img id="up-icon" src="img/1-navigation-previous-item.png"/><img id="app-icon" src="img/icon.png" height="32"/>
         </a>
-        <select><option>KIJ2013</select>
+        <h1 id="title"></h1>
+        <select id="spinner"></select>
+        <select id="actions">
+            <option></option>
+        </select>
     </div>
     <div id="body">
-        <section id="news"></section>
+        <section id="news">
+            <ul id="news-list" class="listview"></ul>
+            <div id="news-item"></div>
+        </section>
         <section id="events"></section>
         <section id="radio">
             <img src="img/radio-logo.png" />
@@ -55,6 +64,11 @@
             <p>You can delete your preferences including sub-camp.</p>
             <button id="clear-cache" class="btn">Clear Cache</button>
             <p>You can also clear saved data which has been downloaded</p>
+        </section>
+        <section id="about">
+            <img src="img/appicon.300.png">
+            <h1>KIJ2013 WebApp</h1>
+            <p>Version: 1.0</p>
         </section>
         <div id="loading">
             Loading<br>

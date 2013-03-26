@@ -5,6 +5,9 @@ var KIJ2013 = (function(window, $, Lawnchair){
         default_settings_url = "settings.json",
         loading,
         beingLoaded,
+        spinner,
+        actions,
+        title,
         popup,
         store,
         modules = {},
@@ -15,10 +18,21 @@ var KIJ2013 = (function(window, $, Lawnchair){
          */
         init = function(){
 
+            spinner = $('#spinner');
+            actions = $('#actions');
+            title = $('#title').hide();
             popup = $('#popup');
             loading = $('#loading');
 
             var firstModule;
+
+            spinner.change(function(){
+                navigateTo(spinner.val());
+            });
+
+            actions.change(function(){
+                fireAction(actions.val());
+            });
 
             events.bind('contentready', function(){
                 console.log('contentready');
@@ -30,12 +44,11 @@ var KIJ2013 = (function(window, $, Lawnchair){
 
             events.bind('databaseready', function(){
                 console.log('databaseready');
-                var select = $('#action_bar select'),
-                    m, trigger = false;
-                select.empty();
+
+                // Load Modules
+                var m, trigger = false;
                 for(module in modules){
                     m = modules[module];
-                    $("<option>").text(KIJ2013.Util.ucfirst(module)).appendTo(select);
                     (typeof m.init == "function") && m.init();
                     if(!firstModule){
                         firstModule = module;
@@ -48,9 +61,12 @@ var KIJ2013 = (function(window, $, Lawnchair){
                         (typeof m.show == "function") && m.show();
                     }
                 }
-                select.change(function(){
-                    navigateTo(select.val());
-                });
+
+                // Add our own About action
+                addActionItem('About');
+
+                // If first module does not support contentready event
+                // we need to fire it now
                 if(trigger) {
                     events.trigger('contentready');
                 }
@@ -160,6 +176,24 @@ var KIJ2013 = (function(window, $, Lawnchair){
         },
 
         navigateTo = function(name) {
+            hideSections();
+            showSection(name);
+        },
+
+        fireAction = function(name) {
+            hideSections();
+            actions[0].selectedIndex = 0;
+            showSection(name);
+            spinner.hide();
+            title.show();
+            setActionBarUp(function(){
+                navigateTo(spinner.val());
+                spinner.show();
+                title.hide();
+            });
+        },
+
+        hideSections = function() {
             var sections = $('section:visible'),
                 nm;
             $.each(sections, function(i,item){
@@ -168,6 +202,9 @@ var KIJ2013 = (function(window, $, Lawnchair){
                     modules[nm].hide();
             })
             sections.hide();
+        },
+
+        showSection = function(name){
             $('#'+name.toLowerCase()).show();
             setTitle(name);
             if(modules[name] && typeof modules[name].show == "function")
@@ -197,11 +234,21 @@ var KIJ2013 = (function(window, $, Lawnchair){
                 $('#up-icon').css('visibility', 'hidden');
         },
 
-        setTitle = function(title)
+        setTitle = function(val)
         {
-            var blank = typeof title == "undefined" || title == "",
-                default_title = "KIJ2013";
-            $('#action_bar h1').text(blank ? default_title : title);
+            title.text(val || "KIJ2013");
+        },
+
+        addSpinnerItem = function(name,module){
+            if(typeof module == "undefined")
+                module = name;
+            $("<option>").text(name).val(module).appendTo(spinner);
+        },
+
+        addActionItem = function(name,module){
+            if(typeof module == "undefined")
+                module = name;
+            $("<option>").text(name).val(module).appendTo(actions);
         },
 
         showLoading = function()
@@ -248,6 +295,8 @@ var KIJ2013 = (function(window, $, Lawnchair){
      * Export public API functions
      */
     return {
+        addMenuItem: addSpinnerItem,
+        addActionItem: addActionItem,
         clearCaches: clearCaches,
         clearPreferences: clearPreferences,
         getModuleSettings: getModuleSettings,
